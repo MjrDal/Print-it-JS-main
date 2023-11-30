@@ -49,7 +49,7 @@ let numImg = 0
  * supression de la classe
  * @param {number} value 
  */
-function dotPrev(value){
+function removeLastDot(value){
 	const dotsPrev = document.querySelector(`.dots :nth-child(${value})`);
 	dotsPrev.classList.remove("dot_selected");
 }
@@ -58,21 +58,21 @@ function dotPrev(value){
  * ajout de la classe
  * @param {number} value 
  */
-function dotNext(value){
+function selectDot(value){
 	const dotsNext = document.querySelector(`.dots :nth-child(${value})`);
 	dotsNext.classList.add("dot_selected");
 }
 
 // fonctions changement image
 
-function image(value){
-	const nomImage = slides[value].image
-	baliseImage.src = `./assets/images/slideshow/${nomImage}`;
+function updateImage(value){
+	const nameImage = slides[value].image
+	baliseImage.src = `./assets/images/slideshow/${nameImage}`;
 }
 
 // fonctions changement texte
 
-function texte(value){
+function updateText(value){
 	const textImage = slides[value].tagLine
 	baliseTxt.innerHTML = textImage;
 }
@@ -85,19 +85,15 @@ arrowRight.addEventListener('click', function(){
 	
 	if(numImg < slides.length-1){
 		numImg++
-		dotPrev(numImg);
-		dotNext(numImg + 1);
-		image(numImg)
-		texte(numImg)
-
+		removeLastDot(numImg);
+		selectDot(numImg + 1);
 	}else if(numImg == slides.length-1){
 		numImg = 0
-		dotPrev(slides.length);
-		dotNext(1);
-		image(numImg)
-		texte(numImg)
-
+		removeLastDot(slides.length);
+		selectDot(1);
 	}
+	updateImage(numImg);
+	updateText(numImg);
 });
 
 // Ecoute fleche de gauche
@@ -106,17 +102,14 @@ let arrowLeft = document.querySelector(".arrow_left");
 arrowLeft.addEventListener('click', function(){
 	if(numImg > 0){
 		numImg--
-		dotPrev(numImg + 2);
-		dotNext(numImg + 1);
-		image(numImg)
-		texte(numImg)
-
+		removeLastDot(numImg + 2);
+		selectDot(numImg + 1);
 	}else if(numImg == 0){
 		numImg = slides.length -1;
-		dotPrev(1);
-		dotNext(slides.length);
-		image(numImg)
-		texte(numImg)
-
+		removeLastDot(1);
+		selectDot(slides.length);
 	}
+	updateImage(numImg);
+	updateText(numImg);
+
 });
